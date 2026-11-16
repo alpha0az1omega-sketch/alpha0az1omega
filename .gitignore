@@ -16,3 +16,8 @@ target/
 # Node / Python build artifacts
 node_modules/
 __pycache__/
+
+# Foundry / Solidity build artifacts
+VALUE/contracts/out/
+VALUE/contracts/cache/
+VALUE/contracts/broadcast/

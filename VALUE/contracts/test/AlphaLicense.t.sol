@@ -7,13 +7,12 @@ import {AlphaLicense} from "../src/AlphaLicense.sol";
 contract AlphaLicenseTest is Test {
     AlphaLicense public license;
     address public buyer = address(0x123);
-    // We create a dedicated address for the creator to receive funds
     address public creator = makeAddr("creator");
 
     function setUp() public {
-        // We deploy the contract AS the creator
         vm.prank(creator);
-        license = new AlphaLicense();
+        // We pass the mock hash here as well
+        license = new AlphaLicense("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
     }
 
     function testIdentityMatchesPGP() public view {
@@ -22,14 +21,11 @@ contract AlphaLicenseTest is Test {
 
     function testPurchaseLicense() public {
         vm.deal(buyer, 1 ether);
-        
         uint256 creatorBalanceBefore = creator.balance;
         
-        // The buyer purchases the license
         vm.prank(buyer);
         license.purchaseLicense{value: 0.1 ether}();
         
-        // We assert that the creator actually received the 0.1 ETH
         assertEq(creator.balance, creatorBalanceBefore + 0.1 ether);
     }
 }

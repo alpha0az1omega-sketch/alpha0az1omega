@@ -1,35 +1,26 @@
 # alpha0az1omega: The Verifiable Digital Organism
 
-This repository is a cryptographic organism. It is designed to surpass traditional Git by integrating verifiable identity, value, and autonomous intelligence.
+This repository is a cryptographic organism. It surpasses traditional Git by integrating verifiable identity, economic value, and autonomous intelligence.
 
 ## 🧭 Core Philosophy (The Math)
 The system relies on the **Verifiable Trust Equation**: 
 `Trust = Hash(Content) + Signature(Identity) + Timestamp(Log)`
 Nothing is trusted based on authority; it is trusted based on mathematical proof. The AI proposes, the deterministic verifier judges.
 
-## 📁 Directory Structure Map
+## ⚙️ The Architecture
 
-*   **/CORE (The Wheel)**: The immutable verification logic. 
-    *   *Why*: Contains the Rust-to-WASM code that verifies hashes, signatures, and execution receipts. 
-    *   *How*: It is deterministic. Anyone can run it and get the same mathematical result.
-*   **/BODY (The Organs)**: The isolated execution environments.
-    *   *Why*: To ensure that code runs identically anywhere.
-    *   *How*: Contains Dockerfiles, `uv.lock` (Python), and `Cargo.lock` (Rust).
-*   **/NERVOUS (The Interface)**: The communication layer.
-    *   *Why*: Allows different languages (Rust, Python, Solidity) to talk safely.
-    *   *How*: Uses WASM Component Model (WIT) definitions.
-*   **/VALUE (The Economics)**: The financial layer.
-    *   *Why*: Turns the repository into a programmable asset (licenses, royalties).
-    *   *How*: Smart contracts tested locally using Anvil/Foundry.
-*   **/ENGINE (The AI Motor)**: The autonomous agents.
-    *   *Why*: Automatically audits, critiques, and proposes upgrades.
-    *   *How*: AI agents propose changes; they **never** have the power to judge or push them. The /CORE judges.
-*   **/SPEC (The Law)**: The specifications.
-    *   *Why*: The absolute source of truth for how the organism behaves.
-    *   *How*: Markdown files defining the threat model and manifest formats.
-*   **/TESTS (The Proof)**: Test vectors and benchmarks.
-*   **/PROOF (Advanced Privacy)**: Zero-Knowledge (ZK) proofs and confidential provenance.
+*   **/CORE (The Wheel)**: Written in Rust, compiled to WebAssembly. It calculates SHA-256 hashes and verifies data integrity. It is mathematically deterministic.
+*   **/VALUE (The Economics)**: Written in Solidity. Contains the `AlphaLicense` smart contract, bound to the creator's PGP fingerprint and the CORE's hash. It manages royalties and economic value on-chain.
+*   **/ENGINE (The AI Motor)**: The rules governing AI agents. It enforces a strict asymmetry: AI can propose code, but only the Human holding the Private PGP Key can cryptographically commit and validate it.
+*   **/SPEC (The Law)**: The specifications and manifests defining the organism's behavior.
 
-## 🔐 Identity Anchor
-This project is cryptographically bound to the PGP Key: 
+## 🛡️ Cryptographic Guarantees
+This project is bound to the PGP Key: 
 `alpha0az1omega@users.noreply.github.com`
+Fingerprint: `643F45B7B3A9C65C1DB1703B9870EEC405078488`
+
+Every commit is signed. Every economic transaction is validated by deterministic smart contracts. Every AI proposal is subject to human cryptographic approval.
+
+## 🚀 Genesis Block
+The economic layer was successfully deployed to the Anvil local testnet.
+Contract Address: `0x5FbDB2315678afecb367f032d93F642f64180aa3`

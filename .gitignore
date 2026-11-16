@@ -1,0 +1,18 @@
+# OS generated files
+.DS_Store
+._*
+
+# Logs and local environments
+logs/
+*.log
+.env
+venv/
+.venv/
+
+# Rust / WASM build artifacts
+target/
+*.wasm
+
+# Node / Python build artifacts
+node_modules/
+__pycache__/

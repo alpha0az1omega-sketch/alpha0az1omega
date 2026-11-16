@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0",
+  "project": "alpha0az1omega",
+  "creator": {
+    "identity": "alpha0az1omega@users.noreply.github.com",
+    "pgp_fingerprint": "643F45B7B3A9C65C1DB1703B9870EEC405078488"
+  },
+  "artifact": {
+    "name": "SPEC_manifest_md",
+    "hash_algorithm": "sha256",
+    "content_hash": "c8f8bc7d15f5ece331b831f8a75ca3cdd584a80f0efcdc67a90919a664fbd461"
+  },
+  "cryptography": {
+    "signature_algorithm": "openpgp",
+    "signature": "<PENDING_SIGNATURE>"
+  },
+  "timestamp": {
+    "utc": "2026-11-16T01:34:51Z",
+    "log_inclusion_proof": "<PENDING_MERKLE_PROOF>"
+  }
+}

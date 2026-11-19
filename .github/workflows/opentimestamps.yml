@@ -1,0 +1,25 @@
+name: OpenTimestamps Bitcoin Anchor
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  timestamp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenTimestamps Client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install opentimestamps-client
+      - name: Create Timestamp
+        run: |
+          git rev-parse HEAD > commit_hash.txt
+          ots stamp commit_hash.txt
+      - name: Upload OTS Proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: opentimestamps-proof
+          path: commit_hash.txt.ots

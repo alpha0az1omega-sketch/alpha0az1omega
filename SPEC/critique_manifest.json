@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "ai_agent": {
+    "model_name": "<NAME_OF_THE_AI_MODEL>",
+    "prompt_hash": "<SHA256_OF_THE_PROMPT_USED>"
+  },
+  "proposed_changes": {
+    "target_file": "<PATH_TO_FILE>",
+    "rationale": "<WHY_THE_AI_MADE_THIS_CHANGE>"
+  },
+  "self_critique": {
+    "potential_risks": "<WHAT_COULD_GO_WRONG>",
+    "deterministic_tests_passed": false
+  },
+  "human_approval": {
+    "status": "PENDING",
+    "pgp_signature": null
+  }
+}

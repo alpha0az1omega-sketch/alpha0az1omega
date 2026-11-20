@@ -17,7 +17,7 @@ Nothing is trusted based on authority; it is trusted based on mathematical proof
 ## 🛡️ Cryptographic Guarantees
 This project is bound to the PGP Key: 
 `alpha0az1omega@users.noreply.github.com`
-Fingerprint: `643F45B7B3A9C65C1DB1703B9870EEC405078488`
+Fingerprint: `27D7D0E98A47D4A27124CC53EEC3D5AE9D2E2290`
 
 Every commit is signed. Every economic transaction is validated by deterministic smart contracts. Every AI proposal is subject to human cryptographic approval.
 

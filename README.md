@@ -1,6 +1,6 @@
 # alpha0az1omega: The Verifiable Digital Organism
 
-This repository is a cryptographic organism. It surpasses traditional Git by integrating verifiable identity, economic value, and autonomous intelligence.
+This repository is a cryptographic organism. It help traditional Git by integrating verifiable identity, economic value, and autonomous intelligence.
 
 ## 🧭 Core Philosophy (The Math)
 The system relies on the **Verifiable Trust Equation**: 

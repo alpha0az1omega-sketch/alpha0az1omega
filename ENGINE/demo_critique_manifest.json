@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "ai_agent": {
+    "model_name": "Demo-Agent-v1",
+    "prompt_hash": "bfbfd9dc072bc0ec9c4c11b0b3e7b7a023d0e32680b6cd832556c9359e475e47"
+  },
+  "proposed_changes": {
+    "target_file": "ENGINE/proposed_function.py",
+    "rationale": "Added a basic addition function."
+  },
+  "self_critique": {
+    "potential_risks": "None detected.",
+    "deterministic_tests_passed": true
+  },
+  "human_approval": {
+    "status": "PENDING",
+    "pgp_signature": null
+  }
+}

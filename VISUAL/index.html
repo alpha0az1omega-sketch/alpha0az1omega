@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ALPHA OS // THE AWAKENING</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;400&display=swap');
+        
+        body { margin: 0; overflow: hidden; background: #ffffff; font-family: 'JetBrains Mono', monospace; color: #000; }
+        
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; cursor: grab; }
+        #canvas-container:active { cursor: grabbing; }
+        
+        #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        .panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 20px; pointer-events: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px; margin-bottom: 15px; font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 2px; color: #000; text-transform: uppercase; font-weight: 700; }
+        .panel-content { font-size: 11px; color: #333; line-height: 1.8; }
+        
+        .top-row { display: flex; justify-content: space-between; align-items: flex-start; }
+        .bottom-row { display: flex; justify-content: space-between; align-items: flex-end; }
+        
+        #panel-data { width: 340px; }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .highlight { color: #000; font-weight: 700; text-align: right; word-break: break-all; }
+        .gold { color: #b8860b; text-shadow: 0 0 10px rgba(184, 134, 11, 0.3); }
+        
+        #panel-beacon { width: 380px; position: absolute; top: 30px; left: 50%; transform: translateX(-50%); text-align: center; border-color: rgba(0, 0, 0, 0.2); }
+        #beacon-time { font-family: 'Cinzel', serif; font-size: 32px; color: #000; margin: 10px 0; letter-spacing: 4px; font-weight: 700; }
+        #beacon-hash { font-size: 10px; color: #666; letter-spacing: 1px; }
+        
+        #panel-right { width: 320px; display: flex; flex-direction: column; gap: 15px; }
+        .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #ff0000; margin-right: 8px; box-shadow: 0 0 10px #ff0000; }
+        .status-dot.online { background: #008000; box-shadow: 0 0 10px #008000; }
+        
+        #terminal-panel { width: 50%; max-width: 600px; }
+        .terminal-input-wrapper { display: flex; align-items: center; margin-top: 15px; background: rgba(0,0,0,0.05); border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 4px; padding: 10px 15px; }
+        .terminal-prompt { color: #b8860b; margin-right: 10px; font-weight: bold; }
+        #cli-input { flex-grow: 1; border: none; background: transparent; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #000; }
+        
+        #panel-integrity { width: 320px; }
+        .integrity-bar { height: 2px; background: rgba(0,0,0,0.1); border-radius: 1px; margin: 15px 0; overflow: hidden; }
+        .integrity-fill { height: 100%; width: 100%; background: #000; transition: width 0.5s; }
+        .hash-text { font-size: 10px; color: #555; word-break: break-all; }
+        
+        #init-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease; }
+        button { padding: 20px 50px; border: 1px solid #000; background: none; color: #000; font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; transition: all 0.5s; font-weight: bold;}
+        button:hover { background: #000; color: #fff; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="init-screen">
+        <h2 style="font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 15px; margin-bottom: 40px; color:#000;">ALPHA OS</h2>
+        <button id="start-btn">Awaken Entity</button>
+    </div>
+
+    <div id="canvas-container"></div>
+    
+    <div id="ui-layer">
+        <div class="top-row">
+            <div class="panel" id="panel-data">
+                <div class="panel-header">Cryptographic Identity</div>
+                <div class="panel-content">
+                    <div class="data-row"><span>PGP_KEY:</span> <span class="highlight gold">27D7D0E98A47D4A27124CC53EEC3D5AE9D2E2290</span></div>
+                    <div class="data-row"><span>OTS_BLOCK:</span> <span class="highlight" id="ots-block">#874,293,102</span></div>
+                    <div class="data-row"><span>ENTROPY:</span> <span class="highlight" id="entropy-pool">4096 bits</span></div>
+                    <div class="data-row"><span>CORE_MATH:</span> <span class="highlight">SHA-256 / WASM</span></div>
+                </div>
+            </div>
+
+            <div class="panel" id="panel-beacon">
+                <div class="panel-header" style="justify-content: center; border: none;">CHRONOS BEACON</div>
+                <div id="beacon-time">--:--:--</div>
+                <div id="beacon-hash">HASH: Waiting...</div>
+            </div>
+
+            <div id="panel-right">
+                <div class="panel">
+                    <div class="panel-header">Agent Vitality</div>
+                    <div class="panel-content">
+                        <div class="data-row"><span>ID:</span> <span class="highlight">NEXUS-01</span></div>
+                        <div class="data-row"><span>STATE:</span> <span id="agent-status" class="gold">AWAKE</span></div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">AI Core</div>
+                    <div class="panel-content">
+                        <div class="data-row"><span>LLM:</span> <span><span class="status-dot online"></span> NEURAL-NET</span></div>
+                        <div class="data-row"><span>TOKENS:</span> <span id="token-count" class="highlight">1,024 / 8192</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-row">
+            <div class="panel" id="terminal-panel">
+                <div class="panel-header">Language Core</div>
+                <div id="terminal-output" style="height: 60px; overflow-y: auto; margin-bottom: 5px; font-size: 11px; color: #333;">
+                    > Awaiting input...
+                </div>
+                <div class="terminal-input-wrapper">
+                    <span class="terminal-prompt">α ></span>
+                    <input type="text" id="cli-input" placeholder="Speak to the Entity..." autocomplete="off">
+                </div>
+            </div>
+            <div class="panel" id="panel-integrity">
+                <div class="panel-header">Epistemic Integrity</div>
+                <div style="font-size: 10px; margin-bottom: 5px;">AI Output Hash:</div>
+                <div class="hash-text" id="ai-hash">Waiting...</div>
+                <div class="integrity-bar"><div class="integrity-fill" id="integrity-fill" style="width: 0%;"></div></div>
+                <div style="font-size: 10px; color: #666;">Verify: <span id="verify-status">IDLE</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff); 
+        
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.set(0, 0, 100);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        const gridHelper = new THREE.GridHelper(200, 40, 0x000000, 0xeeeeee);
+        gridHelper.position.y = -35;
+        gridHelper.material.opacity = 0.3;
+        gridHelper.material.transparent = true;
+        scene.add(gridHelper);
+
+        const headGroup = new THREE.Group();
+        scene.add(headGroup);
+
+        const skullGeo = new THREE.SphereGeometry(20, 64, 64);
+        const pos = skullGeo.attributes.position;
+        
+        for (let i = 0; i < pos.count; i++) {
+            let x = pos.getX(i);
+            let y = pos.getY(i);
+            let z = pos.getZ(i);
+
+            if (z < 0) z *= 0.8;
+            if (y < -5) {
+                const factor = 1 + (y / 20) * 0.4; 
+                x *= factor;
+                z *= factor;
+            }
+            if (y > 10) z += 1.5;
+            
+            const distEyeL = Math.sqrt((x + 7)**2 + (y - 6)**2 + (z - 18)**2);
+            const distEyeR = Math.sqrt((x - 7)**2 + (y - 6)**2 + (z - 18)**2);
+            if (distEyeL < 5 || distEyeR < 5) {
+                z -= 2.5;
+            }
+
+            pos.setXYZ(i, x, y, z);
+        }
+        skullGeo.computeVertexNormals();
+        
+        const skullMat = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.15 });
+        const skull = new THREE.Mesh(skullGeo, skullMat);
+        headGroup.add(skull);
+
+        const noseGeo = new THREE.ConeGeometry(2.5, 8, 4);
+        const noseMat = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.2 });
+        const nose = new THREE.Mesh(noseGeo, noseMat);
+        nose.position.set(0, -2, 20);
+        nose.rotation.x = Math.PI / 2;
+        nose.rotation.y = Math.PI / 4; 
+        headGroup.add(nose);
+
+        function createEar(x) {
+            const earGroup = new THREE.Group();
+            const earGeo = new THREE.TorusGeometry(3, 0.5, 8, 32, Math.PI);
+            const earMat = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+            const ear = new THREE.Mesh(earGeo, earMat);
+            ear.rotation.y = Math.PI / 2;
+            
+            const headsetGeo = new THREE.TorusGeometry(1.5, 0.2, 8, 32);
+            const headsetMat = new THREE.MeshBasicMaterial({ color: 0xb8860b, wireframe: true });
+            const headset = new THREE.Mesh(headsetGeo, headsetMat);
+            headset.position.y = 2;
+            
+            earGroup.add(ear);
+            earGroup.add(headset);
+            earGroup.position.set(x, 0, 0);
+            return earGroup;
+        }
+        headGroup.add(createEar(-19));
+        headGroup.add(createEar(19));
+
+        function createEye(x, y, z) {
+            const eyeGroup = new THREE.Group();
+            eyeGroup.position.set(x, y, z);
+
+            const ring1Geo = new THREE.TorusGeometry(2.8, 0.1, 16, 64);
+            const ring1 = new THREE.Mesh(ring1Geo, new THREE.MeshBasicMaterial({ color: 0x000000 }));
+            
+            const ring2Geo = new THREE.TorusGeometry(2.0, 0.15, 16, 64);
+            const ring2 = new THREE.Mesh(ring2Geo, new THREE.MeshBasicMaterial({ color: 0xb8860b }));
+
+            const irisGeo = new THREE.CircleGeometry(1.8, 32);
+            const iris = new THREE.Mesh(irisGeo, new THREE.MeshBasicMaterial({ color: 0x000000 }));
+            iris.position.z = 0.1;
+
+            const pupilGeo = new THREE.CircleGeometry(0.5, 16);
+            const pupil = new THREE.Mesh(pupilGeo, new THREE.MeshBasicMaterial({ color: 0xffffff }));
+            pupil.position.set(0, 0, 0.2);
+
+            eyeGroup.add(ring1);
+            eyeGroup.add(ring2);
+            eyeGroup.add(iris);
+            eyeGroup.add(pupil);
+
+            eyeGroup.userData = { ring1, ring2, pupil };
+            return eyeGroup;
+        }
+
+        const eyeL = createEye(-7, 6, 17);
+        const eyeR = createEye(7, 6, 17);
+        headGroup.add(eyeL);
+        headGroup.add(eyeR);
+
+        const mouthPoints = 50;
+        const mouthGeo = new THREE.BufferGeometry();
+        const mouthPositions = new Float32Array(mouthPoints * 3);
+        mouthGeo.setAttribute('position', new THREE.BufferAttribute(mouthPositions, 3));
+        const mouthMat = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 });
+        const mouth = new THREE.Line(mouthGeo, mouthMat);
+        mouth.position.set(0, -10, 18);
+        headGroup.add(mouth);
+
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let targetRotation = { x: 0, y: 0 };
+        let currentRotation = { x: 0, y: 0 };
+        let targetZoom = 100;
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetMouseX = 0;
+        let targetMouseY = 0;
+
+        const container = document.getElementById('canvas-container');
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            previousMousePosition = { x: e.offsetX, y: e.offsetY };
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+
+            if (isDragging) {
+                const deltaMove = { x: e.offsetX - previousMousePosition.x, y: e.offsetY - previousMousePosition.y };
+                targetRotation.y += deltaMove.x * 0.01;
+                targetRotation.x += deltaMove.y * 0.01;
+                previousMousePosition = { x: e.offsetX, y: e.offsetY };
+            }
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            targetZoom += e.deltaY * 0.1;
+            if (targetZoom < 40) targetZoom = 40;
+            if (targetZoom > 250) targetZoom = 250;
+        }, { passive: false });
+
+        let isSpeaking = false;
+        let speakTimer = 0;
+
+        function generateHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0; 
+            }
+            return '0x' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
+        }
+
+        setInterval(() => {
+            const now = new Date();
+            const timeStr = now.toISOString();
+            document.getElementById('beacon-time').innerText = timeStr.split('T')[1].slice(0,8);
+            document.getElementById('beacon-hash').innerText = "HASH: " + generateHash(timeStr);
+            document.getElementById('token-count').innerText = (1024 + Math.floor(Math.random() * 20)) + " / 8192";
+            document.getElementById('ots-block').innerText = "#" + (874293102 + Math.floor(Math.random() * 10));
+        }, 1000);
+
+        const cliInput = document.getElementById('cli-input');
+        const terminalOutput = document.getElementById('terminal-output');
+        
+        cliInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const prompt = cliInput.value;
+                if(!prompt) return;
+                cliInput.value = '';
+                terminalOutput.innerHTML += `<div>> ${prompt}</div>`;
+                terminalOutput.innerHTML += `<div style="color:#b8860b">[ENTITY] Processing...</div>`;
+                
+                setTimeout(() => {
+                    let response = "I am the Genesis. The mathematical truth incarnate.";
+                    terminalOutput.innerHTML += `<div style="color:#000; font-weight:bold;">[ENTITY] ${response}</div>`;
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+                    isSpeaking = true;
+                    speakTimer = 3.0; 
+
+                    document.getElementById('ai-hash').innerText = generateHash(response);
+                    document.getElementById('verify-status').innerText = "VERIFIED";
+                    document.getElementById('integrity-fill').style.width = "100%";
+                }, 1000);
+            }
+        });
+
+        const clock = new THREE.Clock();
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+            const time = clock.getElapsedTime();
+
+            mouseX += (targetMouseX - mouseX) * 0.05;
+            mouseY += (targetMouseY - mouseY) * 0.05;
+
+            currentRotation.x += (targetRotation.x - currentRotation.x) * 0.05;
+            currentRotation.y += (targetRotation.y - currentRotation.y) * 0.05;
+            scene.rotation.x = currentRotation.x;
+            scene.rotation.y = currentRotation.y;
+
+            headGroup.rotation.y = mouseX * 0.4;
+            headGroup.rotation.x = -mouseY * 0.2;
+
+            camera.position.z += (targetZoom - camera.position.z) * 0.05;
+
+            eyeL.rotation.y = mouseX * 0.8;
+            eyeL.rotation.x = -mouseY * 0.8;
+            eyeR.rotation.y = mouseX * 0.8;
+            eyeR.rotation.x = -mouseY * 0.8;
+
+            eyeL.userData.ring1.rotation.z = time * 1.0;
+            eyeL.userData.ring2.rotation.z = -time * 1.5;
+            eyeR.userData.ring1.rotation.z = -time * 1.0;
+            eyeR.userData.ring2.rotation.z = time * 1.5;
+
+            const breath = Math.sin(time * 1.5) * 0.8;
+            headGroup.position.y = breath;
+            
+            const positions = mouth.geometry.attributes.position.array;
+            for (let i = 0; i < mouthPoints; i++) {
+                const x = (i / (mouthPoints - 1) - 0.5) * 10; 
+                let y = Math.sin(x * 1.5) * 0.2; 
+
+                if (isSpeaking) {
+                    y += Math.sin(x * 12 + time * 40) * Math.abs(Math.sin(time * 25)) * 1.2;
+                }
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = 0;
+            }
+            mouth.geometry.attributes.position.needsUpdate = true;
+
+            if (isSpeaking) {
+                speakTimer -= delta;
+                if (speakTimer <= 0) isSpeaking = false;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        document.getElementById('start-btn').addEventListener('click', () => {
+            document.getElementById('init-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('init-screen').style.display = 'none';
+            }, 1500);
+            animate();
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

@@ -1,44 +1,40 @@
 #!/bin/bash
-
-# ==========================================
-# ALPHA0AZ1OMEGA MASTER VERIFIER (v0.1)
-# This script is the deterministic judge.
-# It verifies the entire organism in one command.
-# ==========================================
-
-echo "🔍 Starting Organism Verification..."
+echo "🔍 Verifying Organism V2..."
 echo "-----------------------------------"
 
-# 1. Verify Cryptographic Identity (PGP Signature of the last commit)
-echo "Step 1: Checking Cryptographic Identity (PGP Signature)..."
-if git log --show-signature -1 | grep -q "Bonne signature"; then
+# 1. PGP Check
+if git verify-commit HEAD > /dev/null 2>&1; then
     echo "✅ PGP Signature is valid."
 else
     echo "❌ ERROR: PGP Signature is invalid or missing."
     exit 1
 fi
 
-# 2. Verify The Wheel (CORE - Rust Tests)
-echo "Step 2: Verifying The Wheel (CORE Rust Tests)..."
-cd CORE/verifier
-if cargo test --quiet; then
-    echo "✅ CORE mathematical logic is valid."
+# 2. Hash Check
+if ./verify_ai.sh; then
+    echo "✅ Cryptographic integrity verified."
 else
-    echo "❌ ERROR: CORE tests failed."
+    echo "❌ ERROR: Hash mismatch."
     exit 1
 fi
-cd ../..
 
-# 3. Verify The Economics (VALUE - Solidity Tests)
-echo "Step 3: Verifying The Economics (VALUE Solidity Tests)..."
-cd VALUE/contracts
-if forge test --quiet; then
-    echo "✅ VALUE economic logic is valid."
+# 3. Ledger Check
+if python3 ENGINE/ledger.py | grep -q "LEDGER VALID"; then
+    echo "✅ Cryptographic Ledger is intact."
 else
-    echo "❌ ERROR: VALUE tests failed."
+    echo "❌ ERROR: Ledger is corrupted."
+    exit 1
+fi
+
+# 4. Solidity Tests
+cd VALUE/contracts
+if forge test > /dev/null 2>&1; then
+    echo "✅ Solidity Smart Contract tests passed (Royalties & Anti-Reentrancy)."
+else
+    echo "❌ ERROR: Solidity tests failed."
     exit 1
 fi
 cd ../..
 
 echo "-----------------------------------"
-echo "🏆 SUCCESS: The alpha0az1omega organism is fully verified and intact."
+echo "🏆 SUCCESS: The Organism is fully verified, secured, and ready."

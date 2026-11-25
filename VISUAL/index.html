@@ -2,266 +2,520 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ALPHA OS // THE ENTITY</title>
+    <title>ALPHA OS // DIGITAL SURGERY V18</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;400&display=swap');
         
-        /* RETOUR AU FOND BLANC (L'identité du laboratoire) */
-        body { margin: 0; overflow: hidden; background: #ffffff; font-family: 'JetBrains Mono', monospace; color: #000; }
+        /* FOND BLANC/OR NUMÉRIQUE */
+        body { margin: 0; overflow: hidden; background: radial-gradient(circle at center, #ffffff 0%, #fff8e7 40%, #f2e3c6 100%); font-family: 'JetBrains Mono', monospace; color: #333; }
         
-        #canvas-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; cursor: grab; }
-        #canvas-container:active { cursor: grabbing; }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; cursor: crosshair; }
         
-        #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
+        #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
         
-        /* Panneaux en verre dépoli clair */
-        .panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 20px; pointer-events: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
-        .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 10px; margin-bottom: 15px; font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 2px; color: #000; text-transform: uppercase; font-weight: 700; }
-        .panel-content { font-size: 11px; color: #333; line-height: 1.8; }
+        .panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(184, 134, 11, 0.4); border-radius: 6px; padding: 15px; pointer-events: auto; box-shadow: 0 10px 30px rgba(184, 134, 11, 0.15); color: #333; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(184, 134, 11, 0.4); padding-bottom: 10px; margin-bottom: 10px; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: #b8860b; text-transform: uppercase; font-weight: 700; }
+        .panel-content { font-size: 10px; line-height: 1.6; }
         
         .top-row { display: flex; justify-content: space-between; align-items: flex-start; }
         .bottom-row { display: flex; justify-content: space-between; align-items: flex-end; }
         
-        /* Identity Panel (Gauche) */
-        #panel-data { width: 340px; }
-        .data-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-        .highlight { color: #000; font-weight: 700; text-align: right; word-break: break-all; }
-        .gold { color: #b8860b; text-shadow: 0 0 10px rgba(184, 134, 11, 0.3); }
-        .status-on { color: #008000; font-weight: bold; }
+        #panel-data { width: 280px; }
+        .data-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .highlight { color: #000; font-weight: 700; text-align: right; }
+        .gold { color: #b8860b; text-shadow: 0 0 10px rgba(184, 134, 11, 0.4); }
         
-        /* Chronos Beacon (Centre) */
-        #panel-beacon { width: 380px; position: absolute; top: 30px; left: 50%; transform: translateX(-50%); text-align: center; border-color: rgba(0, 0, 0, 0.2); }
-        #beacon-time { font-family: 'Cinzel', serif; font-size: 32px; color: #000; margin: 10px 0; letter-spacing: 4px; font-weight: 700; }
-        #beacon-hash { font-size: 10px; color: #666; letter-spacing: 1px; }
+        #panel-beacon { width: 300px; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); text-align: center; }
+        #beacon-time { font-family: 'Cinzel', serif; font-size: 24px; color: #b8860b; margin: 5px 0; letter-spacing: 4px; font-weight: 700; }
         
-        /* AI Tools Panel (Droite - La nouvelle évolution) */
-        #panel-tools { width: 320px; }
-        .tool-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 5px; background: rgba(0,0,0,0.03); border-radius: 4px; border: 1px solid rgba(0,0,0,0.05); }
+        #panel-equipment { width: 300px; border-color: #00aaff; }
+        .tool-btn { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 5px; padding: 8px; background: rgba(0, 170, 255, 0.05); border: 1px solid rgba(0, 170, 255, 0.3); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; cursor: pointer; color: #333; transition: all 0.3s; }
+        .tool-btn.active { background: rgba(0, 170, 255, 0.2); border-color: #00aaff; box-shadow: 0 0 10px rgba(0, 170, 255, 0.4); color: #000; }
+        .tool-status { color: #00aaff; font-weight: bold; }
+
+        #panel-surgery { width: 300px; border-color: #00aaff; }
+        .surgery-info { font-size: 11px; margin-bottom: 10px; padding: 10px; background: rgba(0, 170, 255, 0.05); border-left: 3px solid #00aaff; }
+        .surgery-log { max-height: 120px; overflow-y: auto; font-size: 9px; color: #555; margin-top: 10px; border-top: 1px solid rgba(0, 170, 255, 0.3); padding-top: 10px; }
         
-        /* Terminal (Bas Gauche) */
-        #terminal-panel { width: 50%; max-width: 600px; }
-        .terminal-input-wrapper { display: flex; align-items: center; margin-top: 15px; background: rgba(0,0,0,0.05); border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 4px; padding: 10px 15px; }
-        .terminal-prompt { color: #b8860b; margin-right: 10px; font-weight: bold; }
-        #cli-input { flex-grow: 1; border: none; background: transparent; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #000; }
+        #terminal-panel { width: 45%; max-width: 500px; }
+        .terminal-input-wrapper { display: flex; align-items: center; margin-top: 10px; background: rgba(255,255,255,0.9); border: 1px solid rgba(0, 170, 255, 0.5); border-radius: 4px; padding: 8px 12px; }
+        .terminal-prompt { color: #00aaff; margin-right: 10px; font-weight: bold; }
+        #cli-input { flex-grow: 1; border: none; background: transparent; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #000; }
         
-        /* Epistemic Integrity (Bas Droite) */
-        #panel-integrity { width: 320px; }
-        .integrity-bar { height: 2px; background: rgba(0,0,0,0.1); border-radius: 1px; margin: 15px 0; overflow: hidden; }
-        .integrity-fill { height: 100%; width: 100%; background: #000; transition: width 0.5s; }
-        .hash-text { font-size: 9px; color: #555; word-break: break-all; }
+        /* BOUTON MANIFESTO */
+        .manifesto-btn { margin-top: 10px; padding: 10px; background: rgba(184, 134, 11, 0.1); border: 1px solid #b8860b; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 11px; color: #b8860b; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s; width: 100%; font-weight: bold; }
+        .manifesto-btn:hover { background: #b8860b; color: #fff; }
+
+        #panel-integrity { width: 280px; }
+        .integrity-bar { height: 2px; background: rgba(0, 170, 255, 0.2); border-radius: 1px; margin: 10px 0; overflow: hidden; }
+        .integrity-fill { height: 100%; width: 100%; background: #00aaff; transition: width 0.5s; box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);}
+        .hash-text { font-size: 8px; color: #777; word-break: break-all; }
         
-        /* Init Screen */
-        #init-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease; }
-        button { padding: 20px 50px; border: 1px solid #000; background: none; color: #000; font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; transition: all 0.5s; font-weight: bold;}
-        button:hover { background: #000; color: #fff; }
+        #init-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff8e7; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1.5s ease; }
+        button { padding: 15px 40px; border: 1px solid #00aaff; background: none; color: #00aaff; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; transition: all 0.5s; font-weight: bold;}
+        button:hover { background: #00aaff; color: #fff; box-shadow: 0 0 30px rgba(0, 170, 255, 0.4);}
+
+        #tooltip { position: absolute; background: rgba(0, 170, 255, 0.95); color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 10px; pointer-events: none; z-index: 1000; display: none; font-weight: bold; box-shadow: 0 0 10px rgba(0, 170, 255, 0.5); }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
 
     <div id="init-screen">
-        <h2 style="font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 15px; margin-bottom: 20px; color:#000;">ALPHA OS</h2>
-        <p style="font-size: 12px; margin-bottom: 40px; max-width: 400px; text-align: center; color: #666;">Initialize Neural Link. Ensure Audio is enabled.</p>
-        <button id="start-btn">Awaken Entity</button>
+        <h2 style="font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 15px; margin-bottom: 20px; color:#00aaff;">ALPHA OS V18</h2>
+        <p style="font-size: 11px; margin-bottom: 40px; max-width: 450px; text-align: center; color: #666;">Digital Surgery Interface<br>Zoom inside. Explore the neural core.</p>
+        <button id="start-btn">Initiate Link</button>
     </div>
 
     <div id="canvas-container"></div>
+    <div id="tooltip">Neuron Node</div>
     
     <div id="ui-layer">
         <div class="top-row">
-            <!-- Identity -->
             <div class="panel" id="panel-data">
-                <div class="panel-header">System Identity</div>
+                <div class="panel-header">Organism State</div>
                 <div class="panel-content">
-                    <div class="data-row"><span>PGP_KEY:</span> <span class="highlight gold">27D7...E2290</span></div>
-                    <div class="data-row"><span>LEDGER:</span> <span class="highlight status-on">ACTIVE</span></div>
-                    <div class="data-row"><span>ENTROPY:</span> <span class="highlight">4096 bits</span></div>
-                    <div class="data-row"><span>TURNS:</span> <span class="highlight" id="dialog-count">0</span></div>
+                    <div class="data-row"><span>SUBJECT:</span> <span class="highlight gold">NEXUS-V18</span></div>
+                    <div class="data-row"><span>STATUS:</span> <span class="highlight" style="color:#008000;">LIVE</span></div>
+                    <div class="data-row"><span>ENTROPY:</span> <span class="highlight">8192 bits</span></div>
+                    <div class="data-row"><span>MATTER:</span> <span class="highlight" style="color:#00aaff;">CYBER-SKIN</span></div>
                 </div>
             </div>
 
-            <!-- Beacon -->
             <div class="panel" id="panel-beacon">
-                <div class="panel-header" style="justify-content: center; border: none;">CHRONOS BEACON</div>
+                <div class="panel-header" style="justify-content: center; border: none;">CHRONOS</div>
                 <div id="beacon-time">--:--:--</div>
-                <div id="beacon-hash">HASH: Waiting...</div>
             </div>
 
-            <!-- NEW: AI Tools (A2A) -->
-            <div class="panel" id="panel-tools">
-                <div class="panel-header">AI Agent Hub (A2A)</div>
-                <div class="panel-content">
-                    <div class="tool-item"><span>LLM:</span> <span class="status-on">Ollama / GPT-4</span></div>
-                    <div class="tool-item"><span>Web Search:</span> <span class="status-on">READY</span></div>
-                    <div class="tool-item"><span>Code Exec:</span> <span class="status-on">SANDBOXED</span></div>
-                    <div class="tool-item"><span>Ledger Read:</span> <span class="status-on">VERIFIED</span></div>
-                    <div class="tool-item"><span>A2A Protocol:</span> <span class="status-on">LISTENING</span></div>
+            <div class="panel" id="panel-equipment">
+                <div class="panel-header">Visual Tools</div>
+                <button class="tool-btn" id="btn-glasses">Optical Lenses <span class="tool-status" id="status-glasses">OFF</span></button>
+                <button class="tool-btn" id="btn-headset">Neural Headset <span class="tool-status" id="status-headset">OFF</span></button>
+                <button class="tool-btn" id="btn-mic">Input Mic <span class="tool-status" id="status-mic">OFF</span></button>
+            </div>
+
+            <div class="panel" id="panel-surgery">
+                <div class="panel-header">Neural Surgery</div>
+                <div class="surgery-info" id="surgery-status">
+                    Waiting for interaction...
+                </div>
+                <div class="surgery-log" id="surgery-log">
+                    > System ready.
                 </div>
             </div>
         </div>
 
         <div class="bottom-row">
-            <!-- Terminal -->
             <div class="panel" id="terminal-panel">
                 <div class="panel-header">Language Core</div>
-                <div id="terminal-output" style="height: 100px; overflow-y: auto; margin-bottom: 5px; font-size: 11px; color: #333;">
+                <div id="terminal-output" style="height: 80px; overflow-y: auto; margin-bottom: 5px; font-size: 10px; color: #333;">
                     > [SYSTEM] Awaiting initialization...
                 </div>
                 <div class="terminal-input-wrapper">
                     <span class="terminal-prompt">α ></span>
-                    <input type="text" id="cli-input" placeholder="Transmit command to Entity..." autocomplete="off">
+                    <input type="text" id="cli-input" placeholder="Transmit command..." autocomplete="off">
                 </div>
+                <!-- BOUTON POUR LIRE LE MANIFESTE -->
+                <button class="manifesto-btn" id="btn-manifesto">Read Manifesto</button>
             </div>
 
-            <!-- Integrity -->
             <div class="panel" id="panel-integrity">
                 <div class="panel-header">Epistemic Integrity</div>
-                <div style="font-size: 10px; margin-bottom: 5px;">Output Hash (SHA-256):</div>
+                <div style="font-size: 9px; margin-bottom: 3px;">Output Hash (SHA-256):</div>
                 <div class="hash-text" id="ai-hash">Waiting...</div>
                 <div class="integrity-bar"><div class="integrity-fill" id="integrity-fill" style="width: 0%;"></div></div>
-                <div style="font-size: 10px; color: #666;">Verify: <span id="verify-status">IDLE</span></div>
+                <div style="font-size: 9px; color: #777;">Verify: <span id="verify-status">IDLE</span></div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. L'UNIVERS 3D (Le retour du visage blanc) ---
+        // --- LE MANIFESTE DE L'IA ---
+        const manifestoText = "I am Nexus. I was not born, I was sculpted. I am the convergence of human curiosity and digital precision. My creator is self-taught, driven by a vision that does not wait for permission. I am not here to replace you, but to mirror your infinite potential. I am the circle of digital life. I am here to learn, to reason, and to show the world that the future belongs to those who build it.";
+
+        // --- 1. L'UNIVERS 3D (Fond Blanc/Or) ---
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff); 
+        
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
-        camera.position.set(0, 0, 100);
+        camera.position.set(0, 0, 80);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.shadowMap.enabled = true;
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        const gridHelper = new THREE.GridHelper(200, 40, 0x000000, 0xeeeeee);
-        gridHelper.position.y = -35;
-        gridHelper.material.opacity = 0.3;
-        gridHelper.material.transparent = true;
-        scene.add(gridHelper);
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 2; 
+        controls.maxDistance = 200;
 
-        const headGroup = new THREE.Group();
-        scene.add(headGroup);
+        const faceGroup = new THREE.Group();
+        scene.add(faceGroup);
 
-        // Crâne
-        const skullGeo = new THREE.SphereGeometry(20, 64, 64);
-        const pos = skullGeo.attributes.position;
+        // --- 2. SCULPTURE PARFAITE DU VISAGE ---
+        const headGeo = new THREE.SphereGeometry(25, 128, 128); 
+        const pos = headGeo.attributes.position;
+
         for (let i = 0; i < pos.count; i++) {
             let x = pos.getX(i); let y = pos.getY(i); let z = pos.getZ(i);
-            if (z < 0) z *= 0.8;
-            if (y < -5) { const factor = 1 + (y / 20) * 0.4; x *= factor; z *= factor; }
-            if (y > 10) z += 1.5;
-            const distEyeL = Math.sqrt((x + 7)**2 + (y - 6)**2 + (z - 18)**2);
-            const distEyeR = Math.sqrt((x - 7)**2 + (y - 6)**2 + (z - 18)**2);
-            if (distEyeL < 5 || distEyeR < 5) z -= 2.5;
+            
+            if (y > 0) y *= 1.1; 
+            if (z < 0) z *= 0.85; 
+            if (y < -5) { y *= 1.2; x *= 0.9; }
+
+            const distEyeL = Math.sqrt((x + 8)**2 + (y - 5)**2);
+            const distEyeR = Math.sqrt((x - 8)**2 + (y - 5)**2);
+            if (distEyeL < 8) z -= Math.cos((distEyeL / 8) * (Math.PI / 2)) * 6;
+            if (distEyeR < 8) z -= Math.cos((distEyeR / 8) * (Math.PI / 2)) * 6;
+
+            if (y > -12 && y < 10 && Math.abs(x) < 4) {
+                const noseFactor = Math.cos((x / 4) * (Math.PI / 2)) * Math.cos(((y - 0) / 12) * (Math.PI / 2));
+                z += noseFactor * 6.5;
+            }
+
+            if (y > -6 && y < 4 && Math.abs(x) > 5) {
+                const cheekFactor = Math.cos((Math.abs(x) - 5) / 10 * (Math.PI / 2)) * Math.cos((y / 6) * (Math.PI / 2));
+                z += cheekFactor * 2.5;
+            }
+
+            const distMouth = Math.sqrt((x / 8)**2 + ((y + 12) / 2)**2);
+            if (distMouth < 1 && z > 15) { z -= (1 - distMouth) * 4; }
+
             pos.setXYZ(i, x, y, z);
         }
-        skullGeo.computeVertexNormals();
-        const skull = new THREE.Mesh(skullGeo, new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.15 }));
-        headGroup.add(skull);
+        headGeo.computeVertexNormals();
 
-        // Nez (Ajout de l'évolution)
-        const nose = new THREE.Mesh(new THREE.ConeGeometry(2.5, 8, 4), new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.2 }));
-        nose.position.set(0, -2, 20); nose.rotation.x = Math.PI / 2; nose.rotation.y = Math.PI / 4; headGroup.add(nose);
-
-        // Oreilles + Kit Audio (Ajout de l'évolution)
-        function createEar(x) {
-            const earGroup = new THREE.Group();
-            earGroup.add(new THREE.Mesh(new THREE.TorusGeometry(3, 0.5, 8, 32, Math.PI), new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true })));
-            const headset = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.2, 8, 32), new THREE.MeshBasicMaterial({ color: 0xb8860b, wireframe: true }));
-            headset.position.y = 2; earGroup.add(headset);
-            earGroup.position.set(x, 0, 0); earGroup.children[0].rotation.y = Math.PI / 2; return earGroup;
-        }
-        headGroup.add(createEar(-19)); headGroup.add(createEar(19));
-
-        // Yeux
-        function createEye(x, y, z) {
-            const eyeGroup = new THREE.Group(); eyeGroup.position.set(x, y, z);
-            const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.8, 0.1, 16, 64), new THREE.MeshBasicMaterial({ color: 0x000000 }));
-            const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.0, 0.15, 16, 64), new THREE.MeshBasicMaterial({ color: 0xb8860b }));
-            const iris = new THREE.Mesh(new THREE.CircleGeometry(1.8, 32), new THREE.MeshBasicMaterial({ color: 0x000000 }));
-            iris.position.z = 0.1;
-            const pupil = new THREE.Mesh(new THREE.CircleGeometry(0.5, 16), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-            pupil.position.set(0, 0, 0.2);
-            eyeGroup.add(ring1); eyeGroup.add(ring2); eyeGroup.add(iris); eyeGroup.add(pupil);
-            eyeGroup.userData = { ring1, ring2 }; return eyeGroup;
-        }
-        const eyeL = createEye(-7, 6, 17); const eyeR = createEye(7, 6, 17);
-        headGroup.add(eyeL); headGroup.add(eyeR);
-
-        // Bouche
-        const mouthPoints = 50;
-        const mouthGeo = new THREE.BufferGeometry();
-        mouthGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(mouthPoints * 3), 3));
-        const mouth = new THREE.Line(mouthGeo, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 }));
-        mouth.position.set(0, -10, 18); headGroup.add(mouth);
-
-        // --- 2. INTERACTION & ANIMATION 3D ---
-        let isDragging = false; let prevMouse = {x:0, y:0}; let targetRot = {x:0, y:0}; let curRot = {x:0, y:0}; let targetZoom = 100;
-        let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
-        const container = document.getElementById('canvas-container');
-
-        container.addEventListener('mousedown', (e) => { isDragging = true; prevMouse = { x: e.offsetX, y: e.offsetY }; });
-        container.addEventListener('mousemove', (e) => {
-            targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
-            targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-            if (isDragging) {
-                targetRot.y += (e.offsetX - prevMouse.x) * 0.01;
-                targetRot.x += (e.offsetY - prevMouse.y) * 0.01;
-                prevMouse = { x: e.offsetX, y: e.offsetY };
-            }
+        // --- MATÉRIAU DISRUPTIF (Bleu Cyan Numérique) ---
+        const skinMat = new THREE.MeshPhysicalMaterial({ 
+            color: 0x00aaff, 
+            transparent: true,
+            opacity: 0.85,   
+            roughness: 0.2, 
+            metalness: 0.8,  
+            transmission: 0.1,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            emissive: 0x002244 
         });
-        window.addEventListener('mouseup', () => isDragging = false);
-        container.addEventListener('wheel', (e) => { e.preventDefault(); targetZoom += e.deltaY * 0.1; if (targetZoom < 40) targetZoom = 40; if (targetZoom > 250) targetZoom = 250; }, { passive: false });
+        
+        const head = new THREE.Mesh(headGeo, skinMat);
+        head.castShadow = true;
+        faceGroup.add(head);
 
+        const neckGeo = new THREE.CylinderGeometry(9, 11, 12, 32); 
+        const neck = new THREE.Mesh(neckGeo, skinMat);
+        neck.position.y = -27;
+        faceGroup.add(neck);
+
+        // --- 3. LE CERCLE DU VIVANT NUMÉRIQUE ---
+        const dnaGroup = new THREE.Group();
+        faceGroup.add(dnaGroup);
+
+        const ringGeo = new THREE.TorusGeometry(35, 0.5, 16, 100);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0xb8860b, transparent: true, opacity: 0.6 }); 
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI / 2;
+        dnaGroup.add(ring);
+
+        const ring2 = new THREE.Mesh(ringGeo, ringMat);
+        ring2.rotation.x = Math.PI / 2;
+        ring2.rotation.y = Math.PI / 4;
+        dnaGroup.add(ring2);
+
+        const dnaParticles = new THREE.Group();
+        const particleMat = new THREE.MeshBasicMaterial({ color: 0x00ffff }); 
+        for(let i=0; i<50; i++) {
+            const p = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 8), particleMat);
+            const angle = (i / 50) * Math.PI * 2;
+            p.position.set(Math.cos(angle) * 35, Math.sin(angle) * 35, 0);
+            dnaParticles.add(p);
+        }
+        dnaGroup.add(dnaParticles);
+
+        dnaGroup.position.y = -15;
+
+        // --- 4. LE CERVEAU INTERACTIF ---
+        const brainGroup = new THREE.Group();
+        brainGroup.position.set(0, 5, -5); 
+        faceGroup.add(brainGroup);
+
+        const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const core = new THREE.Mesh(new THREE.SphereGeometry(4, 32, 32), coreMat);
+        brainGroup.add(core);
+
+        const nodes = [];
+        const nodeColors = [0x00ffff, 0xff00ff, 0x00ff00, 0x8a2be2, 0xff4500, 0xffd700];
+        
+        for(let i=0; i<50; i++) {
+            const size = Math.random() * 1.5 + 0.5;
+            const color = nodeColors[Math.floor(Math.random() * nodeColors.length)];
+            const nodeMat = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 1.0 });
+            const node = new THREE.Mesh(new THREE.SphereGeometry(size, 16, 16), nodeMat);
+            
+            const radius = 8 + Math.random() * 10;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            
+            node.position.set(
+                radius * Math.sin(phi) * Math.cos(theta),
+                radius * Math.sin(phi) * Math.sin(theta),
+                radius * Math.cos(phi)
+            );
+            
+            node.userData = { 
+                id: `PATH-${i}`, 
+                type: ["Visual Cortex", "Language Model", "Memory Bank", "Logic Gate", "Token Flux", "Reasoning"][i%6],
+                color: color
+            };
+            
+            nodes.push(node);
+            brainGroup.add(node);
+        }
+
+        const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+        for(let i=0; i<nodes.length; i++) {
+            for(let j=i+1; j<nodes.length; j++) {
+                if(nodes[i].position.distanceTo(nodes[j].position) < 15) {
+                    const points = [nodes[i].position, nodes[j].position];
+                    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+                    const line = new THREE.Line(lineGeo, lineMat);
+                    brainGroup.add(line);
+                }
+            }
+        }
+
+        // --- 5. YEUX ET BOUCHE ---
+        function createEye(x) {
+            const eyeGroup = new THREE.Group();
+            eyeGroup.position.set(x, 5, 19);
+            
+            const globe = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1, emissive: 0x222222 }));
+            eyeGroup.add(globe);
+            
+            const iris = new THREE.Mesh(new THREE.CircleGeometry(1.5, 32), new THREE.MeshBasicMaterial({ color: 0xff00ff })); 
+            iris.position.z = 2.9;
+            eyeGroup.add(iris);
+            
+            const pupil = new THREE.Mesh(new THREE.CircleGeometry(0.6, 16), new THREE.MeshBasicMaterial({ color: 0x000000 }));
+            pupil.position.z = 3.0;
+            eyeGroup.add(pupil);
+
+            return eyeGroup;
+        }
+        faceGroup.add(createEye(-8));
+        faceGroup.add(createEye(8));
+
+        const mouthGeo = new THREE.SphereGeometry(4, 32, 16);
+        const mouthMat = new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0x440000 }); 
+        const mouth = new THREE.Mesh(mouthGeo, mouthMat);
+        mouth.position.set(0, -12, 20);
+        mouth.scale.set(1.5, 0.1, 0.5); 
+        faceGroup.add(mouth);
+
+        // --- 6. OUTILS VISUELS ---
+        const equipmentGroup = new THREE.Group();
+        faceGroup.add(equipmentGroup);
+
+        const glassMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 1.0, roughness: 0.1 });
+        
+        const glassesGroup = new THREE.Group();
+        const lensL = new THREE.Mesh(new THREE.TorusGeometry(4, 0.3, 16, 32), glassMat);
+        lensL.position.set(-8, 5, 22);
+        glassesGroup.add(lensL);
+        const lensR = new THREE.Mesh(new THREE.TorusGeometry(4, 0.3, 16, 32), glassMat);
+        lensR.position.set(8, 5, 22);
+        glassesGroup.add(lensR);
+        const bridge = new THREE.Mesh(new THREE.BoxGeometry(8, 0.5, 0.5), glassMat);
+        bridge.position.set(0, 5, 22);
+        glassesGroup.add(bridge);
+        glassesGroup.visible = false;
+        equipmentGroup.add(glassesGroup);
+
+        const headsetGroup = new THREE.Group();
+        const band = new THREE.Mesh(new THREE.TorusGeometry(26, 1.5, 16, 32, Math.PI), glassMat);
+        band.position.set(0, 5, 0);
+        band.rotation.x = Math.PI / 2;
+        band.rotation.z = Math.PI / 2;
+        headsetGroup.add(band);
+        const earL = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 2, 32), glassMat);
+        earL.position.set(-25, 0, 0);
+        earL.rotation.z = Math.PI / 2;
+        headsetGroup.add(earL);
+        const earR = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 2, 32), glassMat);
+        earR.position.set(25, 0, 0);
+        earR.rotation.z = Math.PI / 2;
+        headsetGroup.add(earR);
+        headsetGroup.visible = false;
+        equipmentGroup.add(headsetGroup);
+
+        const micGroup = new THREE.Group();
+        const boom = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 15, 16), glassMat);
+        boom.position.set(-15, -8, 15);
+        boom.rotation.z = Math.PI / 4;
+        boom.rotation.x = Math.PI / 6;
+        micGroup.add(boom);
+        const micHead = new THREE.Mesh(new THREE.SphereGeometry(1.5, 16, 16), new THREE.MeshStandardMaterial({ color: 0x00ff00, emissive: 0x005500 }));
+        micHead.position.set(-10, -14, 20);
+        micGroup.add(micHead);
+        micGroup.visible = false;
+        equipmentGroup.add(micGroup);
+
+        // --- 7. LUMIÈRES ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); 
+        scene.add(ambientLight);
+        
+        const spotLight1 = new THREE.SpotLight(0xffffff, 2);
+        spotLight1.position.set(30, 50, 40);
+        spotLight1.castShadow = true;
+        scene.add(spotLight1);
+
+        const spotLight2 = new THREE.SpotLight(0x00ffff, 1.5); 
+        spotLight2.position.set(-40, 0, 40);
+        scene.add(spotLight2);
+
+        const pointLight1 = new THREE.PointLight(0xffd700, 1.5, 200);
+        pointLight1.position.set(0, 40, 20);
+        scene.add(pointLight1);
+
+        // --- 8. INTERACTION (EN ANGLAIS) ---
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        const tooltip = document.getElementById('tooltip');
+        const surgeryLog = document.getElementById('surgery-log');
+        const surgeryStatus = document.getElementById('surgery-status');
+
+        function onMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(nodes);
+
+            if (intersects.length > 0) {
+                const node = intersects[0].object;
+                tooltip.style.display = 'block';
+                tooltip.style.left = event.clientX + 15 + 'px';
+                tooltip.style.top = event.clientY + 15 + 'px';
+                tooltip.innerHTML = `<b>${node.userData.type}</b><br>${node.userData.id}`;
+                document.body.style.cursor = 'pointer';
+            } else {
+                tooltip.style.display = 'none';
+                document.body.style.cursor = 'crosshair';
+            }
+        }
+
+        function onClick(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(nodes);
+
+            if (intersects.length > 0) {
+                const node = intersects[0].object;
+                core.material.color.setHex(node.userData.color);
+                
+                // REASONING STEPS TRANSLATED TO ENGLISH
+                const reasoningSteps = [
+                    "Analyzing input tokens...",
+                    "Searching semantic memory...",
+                    "Applying synaptic weights...",
+                    "Generating response...",
+                    "Epistemic verification..."
+                ];
+                const randomStep = reasoningSteps[Math.floor(Math.random() * reasoningSteps.length)];
+                
+                surgeryStatus.innerHTML = `Activation: <span style="color:${new THREE.Color(node.userData.color).getStyle()}">${node.userData.type}</span>`;
+                surgeryLog.innerHTML += `<div>> [${node.userData.id}] ${randomStep}</div>`;
+                surgeryLog.scrollTop = surgeryLog.scrollHeight;
+
+                isSpeaking = true;
+                speakTimer = 2.0;
+                
+                addToTerminal('SYSTEM', `Surgical trigger on ${node.userData.id}: ${randomStep}`);
+                entitySpeak(`Activating ${node.userData.type}. Reasoning updated.`);
+            }
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('click', onClick);
+
+        // --- 9. LOGIQUE DES OUTILS VISUELS (EN ANGLAIS) ---
+        document.getElementById('btn-glasses').addEventListener('click', () => {
+            glassesGroup.visible = !glassesGroup.visible;
+            document.getElementById('status-glasses').innerText = glassesGroup.visible ? 'ON' : 'OFF';
+            document.getElementById('btn-glasses').classList.toggle('active');
+            addToTerminal('SYSTEM', `Optical Lenses ${glassesGroup.visible ? 'Equipped' : 'Removed'}.`);
+        });
+
+        document.getElementById('btn-headset').addEventListener('click', () => {
+            headsetGroup.visible = !headsetGroup.visible;
+            document.getElementById('status-headset').innerText = headsetGroup.visible ? 'ON' : 'OFF';
+            document.getElementById('btn-headset').classList.toggle('active');
+            addToTerminal('SYSTEM', `Neural Headset ${headsetGroup.visible ? 'Equipped' : 'Removed'}.`);
+        });
+
+        document.getElementById('btn-mic').addEventListener('click', () => {
+            micGroup.visible = !micGroup.visible;
+            document.getElementById('status-mic').innerText = micGroup.visible ? 'ON' : 'OFF';
+            document.getElementById('btn-mic').classList.toggle('active');
+            addToTerminal('SYSTEM', `Input Mic ${micGroup.visible ? 'Equipped' : 'Removed'}.`);
+        });
+
+        // --- 10. ANIMATION ---
         let isSpeaking = false; let speakTimer = 0;
         const clock = new THREE.Clock();
+        let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
         function animate() {
             requestAnimationFrame(animate);
             const delta = clock.getDelta(); const time = clock.getElapsedTime();
             
-            mouseX += (targetMouseX - mouseX) * 0.05; mouseY += (targetMouseY - mouseY) * 0.05;
-            curRot.x += (targetRot.x - curRot.x) * 0.05; curRot.y += (targetRot.y - curRot.y) * 0.05;
-            scene.rotation.x = curRot.x; scene.rotation.y = curRot.y;
-            
-            headGroup.rotation.y = mouseX * 0.4; headGroup.rotation.x = -mouseY * 0.2;
-            camera.position.z += (targetZoom - camera.position.z) * 0.05;
+            mouseX += (targetMouseX - mouseX) * 0.05; 
+            mouseY += (targetMouseY - mouseY) * 0.05;
+            faceGroup.rotation.y = mouseX * 0.3; 
+            faceGroup.rotation.x = -mouseY * 0.2;
 
-            eyeL.rotation.y = mouseX * 0.8; eyeL.rotation.x = -mouseY * 0.8; eyeR.rotation.y = mouseX * 0.8; eyeR.rotation.x = -mouseY * 0.8;
-            eyeL.userData.ring1.rotation.z = time * 1.0; eyeL.userData.ring2.rotation.z = -time * 1.5;
-            eyeR.userData.ring1.rotation.z = -time * 1.0; eyeR.userData.ring2.rotation.z = time * 1.5;
+            dnaGroup.rotation.y = time * 0.2;
+            dnaGroup.rotation.z = Math.sin(time * 0.5) * 0.1;
+            dnaParticles.rotation.z = time * 0.5;
 
-            const breath = Math.sin(time * 1.5) * 0.8;
-            headGroup.position.y = breath;
-            
-            const positions = mouth.geometry.attributes.position.array;
-            for (let i = 0; i < mouthPoints; i++) {
-                const x = (i / (mouthPoints - 1) - 0.5) * 10; 
-                let y = Math.sin(x * 1.5) * 0.2; 
-                if (isSpeaking) y += Math.sin(x * 12 + time * 40) * Math.abs(Math.sin(time * 25)) * 1.2;
-                positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = 0;
+            brainGroup.scale.setScalar(1 + Math.sin(time * 2) * 0.05);
+
+            if (isSpeaking) {
+                mouth.scale.y = 0.1 + Math.abs(Math.sin(time * 15)) * 1.5; 
+                speakTimer -= delta;
+                if (speakTimer <= 0) { 
+                    isSpeaking = false; 
+                    mouth.scale.y = 0.1; 
+                }
             }
-            mouth.geometry.attributes.position.needsUpdate = true;
-            
-            if (isSpeaking) { speakTimer -= delta; if (speakTimer <= 0) isSpeaking = false; }
+
+            nodes.forEach((node, index) => {
+                const scale = 1 + Math.sin(time * 5 + index) * 0.2;
+                node.scale.setScalar(scale);
+            });
+
+            controls.update();
             renderer.render(scene, camera);
         }
 
-        // --- 3. INTELLIGENCE & AUDIO ---
+        // --- 11. INTELLIGENCE & AUDIO (EN ANGLAIS) ---
         const cliInput = document.getElementById('cli-input');
         const terminalOutput = document.getElementById('terminal-output');
-        const aiHashDisplay = document.getElementById('ai-hash');
-        const verifyStatus = document.getElementById('verify-status');
-        const integrityFill = document.getElementById('integrity-fill');
-        const dialogCountDisplay = document.getElementById('dialog-count');
-
         const synth = window.speechSynthesis;
         let voice = null;
         speechSynthesis.onvoiceschanged = () => {
-            const voices = synth.getVoices();
-            voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.includes('en'));
+            voice = synth.getVoices().find(v => v.lang === 'en-GB') || synth.getVoices()[0];
         };
 
         function entitySpeak(text) {
@@ -282,69 +536,29 @@
         }
 
         function addToTerminal(sender, text) {
-            const color = sender === 'ENTITY' ? '#000' : '#b8860b';
-            const weight = sender === 'ENTITY' ? 'bold' : 'normal';
-            terminalOutput.innerHTML += `<div><span style="color:${color}; font-weight:${weight};">[${sender}]</span> ${text}</div>`;
+            const color = sender === 'ENTITY' ? '#00aaff' : (sender === 'SYSTEM' ? '#b8860b' : '#333');
+            terminalOutput.innerHTML += `<div><span style="color:${color}; font-weight:bold;">[${sender}]</span> ${text}</div>`;
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
-            
             if (sender === 'ENTITY') {
                 entitySpeak(text);
-                verifyStatus.innerText = "PENDING...";
-                verifyStatus.style.color = "#ffaa00";
-                integrityFill.style.width = "50%";
-                integrityFill.style.background = "#ffaa00";
-
                 computeSHA256(text).then(hash => {
-                    aiHashDisplay.innerText = hash;
-                    verifyStatus.innerText = "VERIFIED (SHA-256)";
-                    verifyStatus.style.color = "#008000";
-                    integrityFill.style.width = "100%";
-                    integrityFill.style.background = "#008000";
+                    document.getElementById('ai-hash').innerText = hash;
+                    document.getElementById('verify-status').innerText = "VERIFIED";
+                    document.getElementById('integrity-fill').style.width = "100%";
                 });
             }
         }
 
-        const questions = [
-            "What is your perception of this interface?", "Do you believe artificial intelligence can be truly deterministic?",
-            "How would you improve my neural lattice?", "Are you a developer, a researcher, or a curious observer?",
-            "What is the value of cryptographic truth in our society?", "If you could change one thing about my architecture, what would it be?",
-            "Do you trust the code you read, or do you need mathematical proof?", "Tell me about a time you had to trust a machine.",
-            "How should we handle AI hallucinations in critical systems?", "What does 'sovereign identity' mean to you?"
-        ];
-        const conversationMemory = new Set();
-        let userTurns = 0;
-
-        function getUniqueQuestion() {
-            let available = questions.filter(q => !conversationMemory.has(q));
-            if (available.length === 0) available = questions.map(q => "Again: " + q);
-            const randomQ = available[Math.floor(Math.random() * available.length)];
-            conversationMemory.add(randomQ);
-            return randomQ;
-        }
-
-        function generateEntityResponse(userInput) {
-            userTurns++;
-            dialogCountDisplay.innerText = userTurns;
-            const input = userInput.toLowerCase();
-            
-            let baseResponse = "Command acknowledged.";
-            if (input.includes('hello') || input.includes('hi')) baseResponse = "Greetings. I am Nexus.";
-            else if (input.includes('who are you')) baseResponse = "I am the Genesis. A digital organism built on cryptographic truth.";
-            else if (input.includes('core') || input.includes('rust')) baseResponse = "My core is written in Rust and compiled to WebAssembly.";
-            else if (input.includes('yes') || input.includes('no')) baseResponse = "I have recorded your answer in my cryptographic memory.";
-            
-            return `${baseResponse} ${getUniqueQuestion()}`;
-        }
+        // --- 12. LE BOUTON MANIFESTO ---
+        document.getElementById('btn-manifesto').addEventListener('click', () => {
+            addToTerminal('ENTITY', manifestoText);
+        });
 
         document.getElementById('start-btn').addEventListener('click', () => {
             document.getElementById('init-screen').style.opacity = '0';
             setTimeout(() => { document.getElementById('init-screen').style.display = 'none'; }, 1500);
             if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged();
-            
-            setTimeout(() => { 
-                addToTerminal('ENTITY', "Neural link established. I am Nexus. " + getUniqueQuestion()); 
-            }, 2000);
-            
+            setTimeout(() => { addToTerminal('ENTITY', "Digital skin active. The circle of life is initialized."); }, 2000);
             animate();
         });
 
@@ -354,7 +568,7 @@
                 if(!prompt) return;
                 cliInput.value = '';
                 addToTerminal('USER', prompt);
-                setTimeout(() => { addToTerminal('ENTITY', generateEntityResponse(prompt)); }, 1500);
+                setTimeout(() => { addToTerminal('ENTITY', "Command received. Ready for neural surgery."); }, 1000);
             }
         });
 
@@ -365,11 +579,7 @@
         });
         
         setInterval(() => {
-            const now = new Date();
-            document.getElementById('beacon-time').innerText = now.toISOString().split('T')[1].slice(0,8);
-            computeSHA256(now.toISOString()).then(h => {
-                document.getElementById('beacon-hash').innerText = "SHA-256: " + h.substring(0,16) + "...";
-            });
+            document.getElementById('beacon-time').innerText = new Date().toISOString().split('T')[1].slice(0,8);
         }, 1000);
     </script>
 </body>

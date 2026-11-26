@@ -439,24 +439,18 @@
                 const node = intersects[0].object;
                 core.material.color.setHex(node.userData.color);
                 
-                // LOGS FACTUELS (Pas de faux raisonnement poétique)
-                const sysSteps = [
-                    "Querying local database...",
-                    "Mapping vector embeddings...",
-                    "Adjusting attention weights...",
-                    "Formatting output tokens...",
-                    "Running integrity check..."
-                ];
-                const step = sysSteps[Math.floor(Math.random() * sysSteps.length)];
+                // V21 : Connexion à l'API locale
+                surgeryStatus.innerHTML = `Activating: <span style="color:${new THREE.Color(node.userData.color).getStyle()}">${node.userData.type}</span>`;
                 
-                reasoningStatus.innerHTML = `Active Node: <span style="color:${new THREE.Color(node.userData.color).getStyle()}">${node.userData.type}</span>`;
-                reasoningLog.innerHTML += `<div>> [${node.userData.id}] ${step}</div>`;
-                reasoningLog.scrollTop = reasoningLog.scrollHeight;
+                let prompt = "Explain your existence.";
+                if (node.userData.type.includes("Language")) prompt = "Describe how you process language.";
+                if (node.userData.type.includes("Memory")) prompt = "What data do you store?";
+                if (node.userData.type.includes("Logic")) prompt = "Explain logical verification.";
+                if (node.userData.type.includes("Token")) prompt = "What are tokens in your system?";
+                if (node.userData.type.includes("Visual")) prompt = "How do you see the world?";
 
-                isSpeaking = true;
-                speakTimer = 2.0;
-                
-                addToTerminal('SYSTEM', `Node ${node.userData.id} accessed. Operation: ${step}`);
+                cliInput.value = prompt;
+                sendToLocalAI();
             }
         }
 

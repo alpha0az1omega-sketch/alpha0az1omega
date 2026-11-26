@@ -67,15 +67,14 @@ def _extract_claims(model: str, answer: str) -> list[dict[str, Any]]:
             continue
         claims.append({
             "id": f"claim_{i}",
-            "proposition": claim.get("proposition", f"unknown_{i}"),
-            "value": claim.get("value", True),
+            "proposition": f"prop_{i}",
+            "value": True,
             "text": sentence,
             "evidence": sentence,
             "source": f"{model}_output"
         })
     
     return claims
-
 
 async def _call_ollama(req: ChatRequest) -> str:
     """Calls Ollama to generate a response."""

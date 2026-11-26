@@ -565,7 +565,7 @@
             line.appendChild(document.createTextNode(String(text)));
             terminalOutput.appendChild(line);
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
-
+            
             if (sender === 'ENTITY') {
                 entitySpeak(String(text));
                 computeSHA256(String(text)).then(hash => {

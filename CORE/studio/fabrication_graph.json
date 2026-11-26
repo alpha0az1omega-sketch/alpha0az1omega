@@ -1,0 +1,454 @@
+{
+  "nodes": [
+    {
+      "node_id": "7e66a249-336",
+      "type": "prompt",
+      "content": "Write exactly one sentence: The Earth orbits the Sun.",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795695261.144911,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "87001314-7eb",
+      "type": "response",
+      "content": "The Earth orbits the Sun.",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795695261.145334,
+      "parents": [
+        "7e66a249-336"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": false,
+          "status": "INVALID_EVIDENCE",
+          "solver": "Z3",
+          "reason": "Evidence quotation is not present in the assistant response.",
+          "scope": "logical_consistency_only"
+        },
+        "epistemic_score": 0.575
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "1cd06e6f-158",
+      "type": "verification",
+      "content": "{\"accepted\": false, \"status\": \"INVALID_EVIDENCE\", \"solver\": \"Z3\", \"reason\": \"Evidence quotation is not present in the assistant response.\", \"scope\": \"logical_consistency_only\"}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795695261.145876,
+      "parents": [
+        "87001314-7eb"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "0fbc1920-9ab",
+      "type": "prompt",
+      "content": "Write exactly one sentence: The Earth orbits the Sun.",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795695801.847219,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "bee1e692-3ee",
+      "type": "response",
+      "content": "The Earth orbits the Sun.",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795695801.847711,
+      "parents": [
+        "0fbc1920-9ab"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": false,
+          "status": "INVALID_INPUT",
+          "solver": "Z3",
+          "reason": "Invalid proposition identifier.",
+          "scope": "logical_consistency_only",
+          "evidence_quotes_checked": 1
+        },
+        "epistemic_score": 0.575
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "43fe0ae6-b86",
+      "type": "verification",
+      "content": "{\"accepted\": false, \"status\": \"INVALID_INPUT\", \"solver\": \"Z3\", \"reason\": \"Invalid proposition identifier.\", \"scope\": \"logical_consistency_only\", \"evidence_quotes_checked\": 1}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795695801.848247,
+      "parents": [
+        "bee1e692-3ee"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "37669d1b-961",
+      "type": "prompt",
+      "content": "Write exactly one sentence: The Earth orbits the Sun.",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795696615.2050428,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "d150548c-80d",
+      "type": "response",
+      "content": "The Earth orbits the Sun in an elliptical path, completing one full orbit approximately every 365.25 days.",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795696615.206483,
+      "parents": [
+        "37669d1b-961"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": true,
+          "status": "CONSISTENT",
+          "solver": "Z3",
+          "claim_count": 1,
+          "scope": "logical_consistency_only",
+          "evidence_quotes_checked": 1
+        },
+        "epistemic_score": 0.925
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "59625213-651",
+      "type": "verification",
+      "content": "{\"accepted\": true, \"status\": \"CONSISTENT\", \"solver\": \"Z3\", \"claim_count\": 1, \"scope\": \"logical_consistency_only\", \"evidence_quotes_checked\": 1}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795696615.207731,
+      "parents": [
+        "d150548c-80d"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "a42b1ab5-94b",
+      "type": "prompt",
+      "content": "Reply with exactly ALPHA0AZ1OMEGA_OK",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795716516.0730581,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "e6cf631c-d62",
+      "type": "response",
+      "content": "ALPHA0AZ1OMEGA_OK",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795716516.07411,
+      "parents": [
+        "a42b1ab5-94b"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": true,
+          "status": "CONSISTENT",
+          "solver": "Z3",
+          "claim_count": 1,
+          "scope": "logical_consistency_only",
+          "evidence_quotes_checked": 1
+        },
+        "epistemic_score": 0.925
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "0d7b7089-15b",
+      "type": "verification",
+      "content": "{\"accepted\": true, \"status\": \"CONSISTENT\", \"solver\": \"Z3\", \"claim_count\": 1, \"scope\": \"logical_consistency_only\", \"evidence_quotes_checked\": 1}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795716516.074807,
+      "parents": [
+        "e6cf631c-d62"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "0b7063d8-396",
+      "type": "prompt",
+      "content": "help",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795716739.042419,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "7e20e7ee-1e9",
+      "type": "response",
+      "content": "Of course! How can I assist you today? Do you have a specific question or need information on a particular topic?",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795716739.043743,
+      "parents": [
+        "0b7063d8-396"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": true,
+          "status": "CONSISTENT",
+          "solver": "Z3",
+          "claim_count": 3,
+          "scope": "logical_consistency_only",
+          "evidence_quotes_checked": 3
+        },
+        "epistemic_score": 0.925
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "653b80f5-8b8",
+      "type": "verification",
+      "content": "{\"accepted\": true, \"status\": \"CONSISTENT\", \"solver\": \"Z3\", \"claim_count\": 3, \"scope\": \"logical_consistency_only\", \"evidence_quotes_checked\": 3}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795716739.044399,
+      "parents": [
+        "7e20e7ee-1e9"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "1c8e99fb-955",
+      "type": "prompt",
+      "content": "what is the time ?",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795716797.1824472,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "d0d49102-875",
+      "type": "response",
+      "content": "As an AI, I don't have real-time clock data, so I can't tell you the current time. However, you can easily check the time on your device or by asking your device's assistant like \"What's the time?\" if you're using a smart device. If you tell me your location, I can give you an approximate idea of the time there.",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795716797.183429,
+      "parents": [
+        "1c8e99fb-955"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": true,
+          "status": "CONSISTENT",
+          "solver": "Z3",
+          "claim_count": 3,
+          "scope": "logical_consistency_only",
+          "evidence_quotes_checked": 3
+        },
+        "epistemic_score": 0.925
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "a0c3134c-629",
+      "type": "verification",
+      "content": "{\"accepted\": true, \"status\": \"CONSISTENT\", \"solver\": \"Z3\", \"claim_count\": 3, \"scope\": \"logical_consistency_only\", \"evidence_quotes_checked\": 3}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795716797.1842701,
+      "parents": [
+        "d0d49102-875"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "0cd73cb4-0f3",
+      "type": "prompt",
+      "content": "La Terre est ronde. La Terre n est pas ronde.",
+      "creator": "human",
+      "creator_id": "alpha0az1omega",
+      "timestamp": 1795717464.3059862,
+      "parents": [],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "57a6138b-6c1",
+      "type": "response",
+      "content": "Il semble qu'il y ait une contradiction dans vos affirmations. En r\u00e9alit\u00e9, la Terre est ronde, bien qu'elle ait une forme l\u00e9g\u00e8rement aplatie aux p\u00f4les. C'est une sph\u00e8re approximativement, avec une surface globale qui nous fait parfois penser qu'elle",
+      "creator": "ai",
+      "creator_id": "qwen2.5:7b",
+      "timestamp": 1795717464.3065522,
+      "parents": [
+        "0cd73cb4-0f3"
+      ],
+      "metadata": {
+        "verification": {
+          "accepted": true,
+          "status": "CONSISTENT",
+          "solver": "Z3",
+          "claim_count": 3,
+          "scope": "logical_consistency_only",
+          "evidence_quotes_checked": 3
+        },
+        "epistemic_score": 0.925
+      },
+      "verification": null,
+      "epistemic_score": null
+    },
+    {
+      "node_id": "da7beb45-f01",
+      "type": "verification",
+      "content": "{\"accepted\": true, \"status\": \"CONSISTENT\", \"solver\": \"Z3\", \"claim_count\": 3, \"scope\": \"logical_consistency_only\", \"evidence_quotes_checked\": 3}",
+      "creator": "ai",
+      "creator_id": "Z3",
+      "timestamp": 1795717464.307025,
+      "parents": [
+        "57a6138b-6c1"
+      ],
+      "metadata": {},
+      "verification": null,
+      "epistemic_score": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "7e66a249-336",
+      "target": "87001314-7eb",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "87001314-7eb",
+      "target": "1cd06e6f-158",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "0fbc1920-9ab",
+      "target": "bee1e692-3ee",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "bee1e692-3ee",
+      "target": "43fe0ae6-b86",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "37669d1b-961",
+      "target": "d150548c-80d",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "d150548c-80d",
+      "target": "59625213-651",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "a42b1ab5-94b",
+      "target": "e6cf631c-d62",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "e6cf631c-d62",
+      "target": "0d7b7089-15b",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "0b7063d8-396",
+      "target": "7e20e7ee-1e9",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "7e20e7ee-1e9",
+      "target": "653b80f5-8b8",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "1c8e99fb-955",
+      "target": "d0d49102-875",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "d0d49102-875",
+      "target": "a0c3134c-629",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "0cd73cb4-0f3",
+      "target": "57a6138b-6c1",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    },
+    {
+      "source": "57a6138b-6c1",
+      "target": "da7beb45-f01",
+      "relation": "produces",
+      "weight": 1.0,
+      "metadata": {}
+    }
+  ],
+  "last_updated": 1795717464.307054
+}

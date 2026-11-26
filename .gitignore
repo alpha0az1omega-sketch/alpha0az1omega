@@ -21,3 +21,6 @@ __pycache__/
 VALUE/contracts/out/
 VALUE/contracts/cache/
 VALUE/contracts/broadcast/
+BACKUPS/
+__pycache__/
+.DS_Store

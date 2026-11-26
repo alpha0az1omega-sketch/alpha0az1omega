@@ -1,0 +1,86 @@
+[
+  {
+    "index": 0,
+    "content_hash": "f70f75a51c966c847e8694a1bea22efeba009d1733a03b1d9cdde7cc408ca6fe",
+    "previous_neuron": "ROOT",
+    "timestamp": 1795695261.1423202,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "INVALID_EVIDENCE"
+    },
+    "response_preview": "The Earth orbits the Sun."
+  },
+  {
+    "index": 1,
+    "content_hash": "f70f75a51c966c847e8694a1bea22efeba009d1733a03b1d9cdde7cc408ca6fe",
+    "previous_neuron": "f70f75a51c966c847e8694a1bea22efeba009d1733a03b1d9cdde7cc408ca6fe",
+    "timestamp": 1795695801.8448372,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "INVALID_INPUT"
+    },
+    "response_preview": "The Earth orbits the Sun."
+  },
+  {
+    "index": 2,
+    "content_hash": "1a353be3d36a5f7506c47522281b9e1e9563f82b0277aeeb9a9b696f2b1827a2",
+    "previous_neuron": "f70f75a51c966c847e8694a1bea22efeba009d1733a03b1d9cdde7cc408ca6fe",
+    "timestamp": 1795696615.19806,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "CONSISTENT"
+    },
+    "response_preview": "The Earth orbits the Sun in an elliptical path, completing one full orbit approximately every 365.25 days."
+  },
+  {
+    "index": 3,
+    "content_hash": "abffd57a156a4b800674a7323287c62f152b60dfa9d812d064b050fdd960be87",
+    "previous_neuron": "1a353be3d36a5f7506c47522281b9e1e9563f82b0277aeeb9a9b696f2b1827a2",
+    "timestamp": 1795716516.0687768,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "CONSISTENT"
+    },
+    "response_preview": "ALPHA0AZ1OMEGA_OK"
+  },
+  {
+    "index": 4,
+    "content_hash": "e76e7770e8c88aa773355861b0b5a9c47dc35f36b416169ed38d2cb698ead76a",
+    "previous_neuron": "abffd57a156a4b800674a7323287c62f152b60dfa9d812d064b050fdd960be87",
+    "timestamp": 1795716739.038848,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "CONSISTENT"
+    },
+    "response_preview": "Of course! How can I assist you today? Do you have a specific question or need information on a particular topic?"
+  },
+  {
+    "index": 5,
+    "content_hash": "937f6438c3f8b0f3cc820a31e6e0e8e76436b0ecf684192b7845485353c33ef0",
+    "previous_neuron": "e76e7770e8c88aa773355861b0b5a9c47dc35f36b416169ed38d2cb698ead76a",
+    "timestamp": 1795716797.178262,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "CONSISTENT"
+    },
+    "response_preview": "As an AI, I don't have real-time clock data, so I can't tell you the current time. However, you can easily check the tim..."
+  },
+  {
+    "index": 6,
+    "content_hash": "d723591cf5c3bf5afafef285669f391b6784af3626a8b73f643b87210b6ab103",
+    "previous_neuron": "937f6438c3f8b0f3cc820a31e6e0e8e76436b0ecf684192b7845485353c33ef0",
+    "timestamp": 1795717464.302672,
+    "pgp_signature": null,
+    "metadata": {
+      "model": "qwen2.5:7b",
+      "verification": "CONSISTENT"
+    },
+    "response_preview": "Il semble qu'il y ait une contradiction dans vos affirmations. En r\u00e9alit\u00e9, la Terre est ronde, bien qu'elle ait une form..."
+  }
+]

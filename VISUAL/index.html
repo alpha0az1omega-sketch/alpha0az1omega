@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ALPHA OS // alpha0az1omega V19</title>
+    <title>ALPHA OS // alpha0az1omega V20</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff8e7">
+    <meta name="application-name" content="ALPHA0AZ1OMEGA">
+    <link rel="manifest" href="/manifest.webmanifest">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;400&display=swap');
         
@@ -89,7 +93,7 @@
             </div>
 
             <div class="panel" id="panel-beacon">
-                <div class="panel-header" style="justify-content: center; border: none;">CHRONOS</div>
+                <div class="panel-header" style="justify-content: center; border: none;">alpha0az1omega</div>
                 <div id="beacon-time">--:--:--</div>
             </div>
 
@@ -105,9 +109,9 @@
                 <div class="panel" id="panel-api">
                     <div class="panel-header">API Connections</div>
                     <div class="panel-content">
-                        <div class="data-row"><span>Ollama (Local):</span> <span class="tool-status" style="color:#008000;">READY</span></div>
-                        <div class="data-row"><span>Anthropic API:</span> <span class="tool-status off">OFFLINE</span></div>
-                        <div class="data-row"><span>Token Flux:</span> <span class="tool-status on">ACTIVE</span></div>
+                        <div class="data-row"><span>Ollama (Local):</span> <span class="tool-status off" id="status-ollama">CHECKING</span></div>
+                        <div class="data-row"><span>Backend API:</span> <span class="tool-status off" id="status-backend">CHECKING</span></div>
+                        <div class="data-row"><span>Verification:</span> <span class="tool-status off" id="status-verifier">CHECKING</span></div>
                     </div>
                 </div>
 
@@ -552,14 +556,22 @@
 
         function addToTerminal(sender, text) {
             const color = sender === 'ENTITY' ? '#00aaff' : (sender === 'SYSTEM' ? '#b8860b' : '#333');
-            terminalOutput.innerHTML += `<div><span style="color:${color}; font-weight:bold;">[${sender}]</span> ${text}</div>`;
+            const line = document.createElement('div');
+            const label = document.createElement('span');
+            label.style.color = color;
+            label.style.fontWeight = 'bold';
+            label.textContent = '[' + sender + '] ';
+            line.appendChild(label);
+            line.appendChild(document.createTextNode(String(text)));
+            terminalOutput.appendChild(line);
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
             if (sender === 'ENTITY') {
-                entitySpeak(text);
-                computeSHA256(text).then(hash => {
+                entitySpeak(String(text));
+                computeSHA256(String(text)).then(hash => {
                     document.getElementById('ai-hash').innerText = hash;
-                    document.getElementById('verify-status').innerText = "VERIFIED";
-                    document.getElementById('integrity-fill').style.width = "100%";
+                    document.getElementById('verify-status').innerText = 'HASHED ONLY';
+                    document.getElementById('integrity-fill').style.width = '35%';
                 });
             }
         }
@@ -577,15 +589,89 @@
             animate();
         });
 
-        cliInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const prompt = cliInput.value;
-                if(!prompt) return;
-                cliInput.value = '';
-                addToTerminal('USER', prompt);
-                setTimeout(() => { addToTerminal('ENTITY', "Command received. Processing."); }, 1000);
+        async function sendToLocalAI() {
+            const prompt = cliInput.value.trim();
+            if (!prompt) return;
+
+            cliInput.value = '';
+            addToTerminal('USER', prompt);
+
+            const status = document.getElementById('reasoning-status');
+            const verify = document.getElementById('verify-status');
+            status.textContent = 'Connecting to local AI...';
+            verify.textContent = 'PENDING';
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'qwen2.5:7b',
+                        prompt: prompt,
+                        num_predict: 512
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail ? JSON.stringify(data.detail) : 'HTTP ' + response.status);
+                }
+
+                addToTerminal('ENTITY', data.response || 'The API returned an empty response.');
+
+                const verification = data.verification || {};
+                verify.textContent = verification.status
+                    ? 'Z3: ' + verification.status + ' (LOGICAL ONLY)'
+                    : 'NO VERIFICATION DATA';
+
+                status.textContent = 'Response received from ' + (data.model || 'local model') + '.';
+                document.getElementById('reasoning-log').textContent =
+                    '> API response received.\n> Verification: ' + (verification.status || 'not supplied');
+
+            } catch (error) {
+                status.textContent = 'Connection error: ' + error.message;
+                verify.textContent = 'UNAVAILABLE';
+                addToTerminal('SYSTEM', 'Local AI connection failed: ' + error.message);
+            }
+        }
+
+        cliInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendToLocalAI();
             }
         });
+
+        async function refreshConnectionStatus() {
+            const setStatus = (id, value, online) => {
+                const element = document.getElementById(id);
+                element.textContent = value;
+                element.classList.toggle('on', online);
+                element.classList.toggle('off', !online);
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/health');
+                if (!response.ok) throw new Error('Backend HTTP ' + response.status);
+
+                const health = await response.json();
+                const backendOnline = health.status === 'ok';
+                const ollamaOnline = health.ollama === 'connected';
+                const verifierOnline = health.verification_engine === 'Z3';
+
+                setStatus('status-backend', backendOnline ? 'CONNECTED' : 'OFFLINE', backendOnline);
+                setStatus('status-ollama', ollamaOnline ? 'CONNECTED' : 'OFFLINE', ollamaOnline);
+                setStatus('status-verifier', verifierOnline ? 'Z3 READY' : 'UNAVAILABLE', verifierOnline);
+            } catch (error) {
+                setStatus('status-backend', 'OFFLINE', false);
+                setStatus('status-ollama', 'UNKNOWN', false);
+                setStatus('status-verifier', 'UNKNOWN', false);
+            }
+        }
+
+        refreshConnectionStatus();
+        setInterval(refreshConnectionStatus, 10000);
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;

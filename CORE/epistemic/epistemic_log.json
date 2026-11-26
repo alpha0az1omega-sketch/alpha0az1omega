@@ -1,0 +1,653 @@
+[
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 0",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "PGP signature missing",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Luminous neuron unsigned",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795694051.225447,
+    "metadata": {}
+  },
+  {
+    "index_C": 1.0,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 1.0000 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 0",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "PGP signature present",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Neuron #0",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795694051.2264268,
+    "metadata": {}
+  },
+  {
+    "index_C": 0.15,
+    "confidence": "UNVERIFIED",
+    "verification": "CONTRADICTION",
+    "evidence_count": 0,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.1500 (UNVERIFIED)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification failed",
+          "severity": "critical",
+          "mitigated": false,
+          "evidence": "Status: CONTRADICTION",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "No claims extracted",
+          "severity": "medium",
+          "mitigated": false,
+          "evidence": "Response without structured claims",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Empty response",
+          "severity": "critical",
+          "mitigated": false,
+          "evidence": "",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "PGP signature missing",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Luminous neuron unsigned",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795694051.22705,
+    "metadata": {}
+  },
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 0",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "PGP signature missing",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Luminous neuron unsigned",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795694051.707808,
+    "metadata": {}
+  },
+  {
+    "index_C": 1.0,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 1.0000 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 0",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "PGP signature present",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Neuron #0",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795694051.708808,
+    "metadata": {}
+  },
+  {
+    "index_C": 0.15,
+    "confidence": "UNVERIFIED",
+    "verification": "CONTRADICTION",
+    "evidence_count": 0,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.1500 (UNVERIFIED)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification failed",
+          "severity": "critical",
+          "mitigated": false,
+          "evidence": "Status: CONTRADICTION",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "No claims extracted",
+          "severity": "medium",
+          "mitigated": false,
+          "evidence": "Response without structured claims",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Empty response",
+          "severity": "critical",
+          "mitigated": false,
+          "evidence": "",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "PGP signature missing",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Luminous neuron unsigned",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795694051.709611,
+    "metadata": {}
+  },
+  {
+    "index_C": 0.575,
+    "confidence": "LOW",
+    "verification": "INVALID_EVIDENCE",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.5750 (LOW)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification failed",
+          "severity": "critical",
+          "mitigated": false,
+          "evidence": "Status: INVALID_EVIDENCE",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795695261.142987,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  },
+  {
+    "index_C": 0.575,
+    "confidence": "LOW",
+    "verification": "INVALID_INPUT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.5750 (LOW)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification failed",
+          "severity": "critical",
+          "mitigated": false,
+          "evidence": "Status: INVALID_INPUT",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795695801.8454,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  },
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 1",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795696615.2012758,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  },
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 1,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 1",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 1/1 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795716516.070705,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  },
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 3,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 3",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 3/3 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795716739.040121,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  },
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 3,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 3",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 3/3 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795716797.179468,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  },
+  {
+    "index_C": 0.925,
+    "confidence": "HIGH",
+    "verification": "CONSISTENT",
+    "evidence_count": 3,
+    "failure_tree": {
+      "node_id": "ROOT",
+      "description": "Complete epistemic evaluation",
+      "severity": "none",
+      "mitigated": false,
+      "evidence": "C = 0.9250 (HIGH)",
+      "children": [
+        {
+          "node_id": "V1",
+          "description": "Z3 verification passed",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Status: CONSISTENT, Claims: 3",
+          "children": []
+        },
+        {
+          "node_id": "E1",
+          "description": "Evidence: 3/3 claims with evidence",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "Ratio: 1.00",
+          "children": []
+        },
+        {
+          "node_id": "H1",
+          "description": "Internal coherence verified",
+          "severity": "none",
+          "mitigated": true,
+          "evidence": "No contradiction markers found",
+          "children": []
+        },
+        {
+          "node_id": "P1",
+          "description": "Neuron without PGP signature",
+          "severity": "low",
+          "mitigated": false,
+          "evidence": "Private key not available at signing time",
+          "children": []
+        }
+      ]
+    },
+    "timestamp": 1795717464.3033972,
+    "metadata": {
+      "model": "qwen2.5:7b"
+    }
+  }
+]

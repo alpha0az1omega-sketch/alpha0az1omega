@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "ALPHA0AZ1OMEGA",
+  "short_name": "ALPHA0AZ1OMEGA",
+  "description": "Local creative and AI environment for alpha0az1omega.",
+  "lang": "en",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fff8e7",
+  "theme_color": "#fff8e7",
+  "icons": [
+    {
+      "src": "/alpha0az1omega-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
